@@ -1,2 +1,6 @@
+# no need to see input/output files
 **/Input/*
 **/Output/*
+
+# ignore pychaces
+__pycache__
