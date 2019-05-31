@@ -1,0 +1,7 @@
+selenium
+webdriver-manager
+tkinter
+tika
+pandas
+openpyxl
+xlsxwriter

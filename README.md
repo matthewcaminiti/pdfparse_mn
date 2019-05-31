@@ -14,6 +14,10 @@ Python app to greatly expedite Themoist's work or (_hopefully_) automate full pr
 ### System Requirements
 
 Written and tested Python 3.7 (_any Python 3.x should suffice_)
+To install all necessary packages:
+```
+pip3 install -r requirements.txt
+```
 
 #### Packages
 
