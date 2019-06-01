@@ -7,6 +7,13 @@ from os import listdir
 
 output_dir = os.path.abspath(os.getcwd() + '/Output')
 
+def get_phrases():
+	phrases = []
+	f = open("pdf_parse/phrases.txt", "r")
+	for line in f:
+		phrases.append(line.strip())
+	return phrases
+
 def get_input_file_paths():
 	''' Pre chill, just grabs all the files in the input directory
 	'''
@@ -23,10 +30,13 @@ def process_pdf(input_path):
 	text = raw['content'] # get the raw text the parser retrieved
 	lines = text.split('\n') # convert the raw text into a list of each newline seperated phrase
 	word_bag = {} # dictionary data type -- basically stores (key, value) pairs
+	desired_phrases = get_phrases()
 	for i, line in enumerate(lines): # walk through the lines
 		lines[i] = line.replace('\n', ' ') # clean out the text
 		if(lines[i] not in word_bag): # word frequency counting
-			word_bag[lines[i]] = 1
+			# phrase lookup
+			if(lines[i] in desired_phrases):
+				word_bag[lines[i]] = 1
 		else:
 			word_bag[lines[i]] += 1
 
