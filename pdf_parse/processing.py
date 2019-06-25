@@ -1,4 +1,4 @@
-from tika import parser # PDF parsing package - seems to be better than PyPdf2 and PdfToText
+# from tika import parser # PDF parsing package - seems to be better than PyPdf2 and PdfToText
 import pandas as pd
 from pandas import DataFrame # Data management package, has useful excel write
 import datetime
@@ -26,9 +26,22 @@ def get_input_file_paths():
 def process_pdf(input_path):
 	''' Process the pdf at the given path. Returns the filename and the phrases, frequencies
 	'''
-	raw = parser.from_file(input_path) # get pdf at specified loaction in path
-	text = raw['content'] # get the raw text the parser retrieved
-	lines = text.split('\n') # convert the raw text into a list of each newline seperated phrase
+	import pdftotext
+	with open(input_path, 'rb') as f:
+		pdf = pdftotext.PDF(f)
+	# text = pdf.read_all()
+	text = pdf[0]
+	# raw = parser.from_file(input_path) # get pdf at specified loaction in path
+	# text = raw['content'] # get the raw text the parser retrieved
+	# convert the raw text into a list of each newline seperated phrase
+	lines = (''.join(text.split('\n'))).split('  ')
+	lines = [x.strip() for x in lines]
+	temp = []
+	for x in lines:
+		if(len(x) > 0):
+			temp.append(x)
+	lines = temp
+	# print(lines)
 	word_bag = {} # dictionary data type -- basically stores (key, value) pairs
 	desired_phrases = get_phrases()
 	for i, line in enumerate(lines): # walk through the lines
@@ -97,6 +110,6 @@ def flush_input():
 			procced_drawings.append(process_pdf(drawing_path))
 	
 	produce_excel(procced_drawings, output_dir, False)
-	for drawing_path in paths: # mark all files that were processed to avoid re-processing
-		input_file_flag(drawing_path)
+	# for drawing_path in paths: # mark all files that were processed to avoid re-processing
+		# input_file_flag(drawing_path)
 
