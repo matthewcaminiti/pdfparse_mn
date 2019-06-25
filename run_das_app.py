@@ -7,3 +7,5 @@ from web.drawing_dl import *
 
 flush_input()
 
+# get_selected_drawing('ma1-101-a')
+
