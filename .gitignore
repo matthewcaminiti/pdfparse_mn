@@ -4,3 +4,6 @@
 
 # ignore pychaces
 __pycache__
+
+*_env/
+env/
